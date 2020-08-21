@@ -110,8 +110,14 @@ function UploadCsvData ($access_token) {
         $fileName = [System.IO.Path]::GetFileName($csvFilePath)
         $fileContent = New-Object System.Net.Http.StreamContent($fileStream)
         $content.Add($fileContent, $fieldName, $fileName)
-    }catch{
-        WriteErrorMessage("Error reading from file. Please check if path is correct")
+    }catch [System.IO.FileNotFoundException]{
+        Write-Error("Csv file not found. ")
+        return
+    }catch [System.IO.IOException]{
+        Write-Error("Csv file might be open")
+        return
+    }catch {
+        Write-Error("Error reading from csv file")
         return
     }
     $client.DefaultRequestHeaders.Add("Authorization", "Bearer $access_token");
