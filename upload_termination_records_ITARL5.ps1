@@ -120,6 +120,7 @@ function UploadCsvData ($access_token) {
         return
     }catch {
         Write-Error("Error reading from csv file")
+        return
     }
     $client.DefaultRequestHeaders.Add("Authorization", "Bearer $access_token");
     
