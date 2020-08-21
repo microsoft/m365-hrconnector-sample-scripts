@@ -123,6 +123,7 @@ function UploadCsvData ($access_token) {
         return
     }
     $client.DefaultRequestHeaders.Add("Authorization", "Bearer $access_token");
+    $client.Timeout = New-Object System.TimeSpan(0, 0, 400)
     
     try {
         $result = $client.PostAsync($url, $content).Result
