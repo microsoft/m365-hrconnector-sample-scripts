@@ -115,6 +115,7 @@ function UploadCsvData ($access_token) {
         return
     }
     $client.DefaultRequestHeaders.Add("Authorization", "Bearer $access_token");
+    $client.Timeout = New-Object System.TimeSpan(0, 0, 150)
     
     try {
         $result = $client.PostAsync($url, $content).Result
@@ -132,8 +133,7 @@ function UploadCsvData ($access_token) {
         }
     }
     elseif ($status_code -eq 0 -or $status_code -eq 501 -or $status_code -eq 503) {
-        Write-Output  "Status code is $status_code"
-         throw "Service unavailable."
+        throw "Service unavailable."
     }
     else {
         WriteErrorMessage("Failure with StatusCode [{0}] and ReasonPhrase [{1}]" -f $result.StatusCode, $result.ReasonPhrase)
@@ -141,6 +141,7 @@ function UploadCsvData ($access_token) {
     }
 }
 
-$access_token = GetAccessToken
-Write-Output $access_token
-UploadCsvData($access_token)
+RetryCommand -ScriptBlock {
+    $access_token = GetAccessToken
+    UploadCsvData($access_token)
+}

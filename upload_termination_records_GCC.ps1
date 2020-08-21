@@ -115,7 +115,7 @@ function UploadCsvData ($access_token) {
         return
     }
     $client.DefaultRequestHeaders.Add("Authorization", "Bearer $access_token");
-	$client.Timeout = New-Object System.TimeSpan(0, 0, 150)
+    $client.Timeout = New-Object System.TimeSpan(0, 0, 150)
     
     try {
         $result = $client.PostAsync($url, $content).Result
@@ -141,6 +141,7 @@ function UploadCsvData ($access_token) {
     }
 }
 
-$access_token = GetAccessToken
-Write-Output $access_token
-UploadCsvData($access_token)
+RetryCommand -ScriptBlock {
+    $access_token = GetAccessToken
+    UploadCsvData($access_token)
+}
