@@ -12,8 +12,8 @@ param
     [string] $csvFilePath
 )
 # Access Token Config
-$oAuthTokenEndpoint = "https://login.microsoftonline.us/$tenantId/oauth2/token"
-$resource = 'https://microsoft.onmicrosoft.com/4e476d41-2395-42be-89ff-34cb9186a1ac'
+$oAuthTokenEndpoint = "https://login.microsoftonline.com/$tenantId/oauth2/token"
+$resource = 'https://prdtrs01.prod.outlook.com/64342688-40f0-476d-8f18-ccf14147bae1'
 
 # Csv upload config
 $eventApiURl = "https://webhook-gcc.ingestion.office365.us/"
