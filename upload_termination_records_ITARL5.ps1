@@ -126,6 +126,7 @@ function UploadCsvData ($access_token) {
     $client.Timeout = New-Object System.TimeSpan(0, 0, 400)
     
     try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         $result = $client.PostAsync($url, $content).Result
     }
     catch {
